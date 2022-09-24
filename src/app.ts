@@ -1,3 +1,4 @@
+// Example All in one place folder structure
 import express, { Request, Response } from "express";
 
 const app = express();
