@@ -1,6 +1,11 @@
 import { db } from "../../../db/db";
 
-export const getAllItems = () => {
+export type Item = {
+  id: number;
+  name: string;
+};
+
+export const getAllItems = (): Item[] | undefined => {
   try {
     return db;
   } catch (error) {
@@ -8,7 +13,7 @@ export const getAllItems = () => {
   }
 };
 
-export const getItem = (id: number) => {
+export const getItem = (id: number): Item | undefined => {
   try {
     return db.filter((item) => item.id === id)[0];
   } catch (error) {
@@ -16,7 +21,7 @@ export const getItem = (id: number) => {
   }
 };
 
-export const editId = (id: number, item: { id: number; name: string }) => {
+export const editId = (id: number, item: Item): Item | undefined => {
   try {
     const index = db.findIndex((item) => item.id === id);
 
@@ -28,7 +33,7 @@ export const editId = (id: number, item: { id: number; name: string }) => {
   }
 };
 
-export const addItem = (item: { id: number; name: string }) => {
+export const addItem = (item: Item): Item | undefined => {
   try {
     db.push(item);
 

@@ -6,58 +6,76 @@ import {
   editId,
   getAllItems,
   getItem,
+  Item,
 } from "../models/rabbits.model";
 
-export const listRabbits = (req: Request, res: Response) => {
+export const listRabbits = (
+  req: Request,
+  res: Response
+): Response<Item[], Record<string, any>> => {
   try {
-    const rabbits = getAllItems();
+    const rabbits: Item[] = getAllItems()!;
 
     return res.status(200).json(rabbits);
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 };
 
-export const getRabbit = (req: Request, res: Response) => {
+export const getRabbit = (
+  req: Request,
+  res: Response
+): Response<Item, Record<string, any>> => {
   try {
     const { id } = req.params;
-    const rabbit = getItem(parseInt(id));
+    const rabbit: Item = getItem(parseInt(id))!;
 
     return res.status(200).json(rabbit);
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 };
 
-export const editRabbit = (req: Request, res: Response) => {
+export const editRabbit = (
+  req: Request,
+  res: Response
+): Response<Item, Record<string, any>> => {
   try {
     let { id } = req.params;
     const { name } = req.body;
 
     let idParsed = parseInt(id);
 
-    const rabbitUpdated = editId(Number(id), { id: idParsed, name });
+    const rabbitUpdated: Item = editId(Number(id), { id: idParsed, name })!;
 
     return res.status(200).json(rabbitUpdated);
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 };
 
-export const addRabbit = (req: Request, res: Response) => {
+export const addRabbit = (
+  req: Request,
+  res: Response
+): Response<Item, Record<string, any>> => {
   try {
     const { name } = req.body;
     const id = getAllItems()!.length + 1;
 
     const rabbit = addItem({ id, name });
 
+    res.location(`rabbits/${id}`);
+
     return res.status(201).json(rabbit);
   } catch (err) {
-    res.status(500).send(err);
+    return res.status(500).send(err);
   }
 };
 
-export const deleteRabbit = (req: Request, res: Response) => {
+export const deleteRabbit = (
+  req: Request,
+  res: Response
+): Response<Item, Record<string, any>> => {
   try {
     const { id } = req.params;
 
@@ -65,6 +83,6 @@ export const deleteRabbit = (req: Request, res: Response) => {
 
     return res.status(200).json();
   } catch (err) {
-    res.status(500).send(err);
+    return res.status(500).send(err);
   }
 };
