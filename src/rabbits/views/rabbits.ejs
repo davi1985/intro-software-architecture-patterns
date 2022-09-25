@@ -1,0 +1,14 @@
+<!-- Rabbits view -->
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <header>All rabbits</header>
+    <main>
+      <ul>
+        <% rabbits.forEach((rabbit) => { %>
+        <li>Id: <%= rabbit.id %> Name: <%= rabbit.name %></li>
+        <% }) %>
+      </ul>
+    </main>
+  </body>
+</html>

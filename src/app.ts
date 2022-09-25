@@ -1,12 +1,16 @@
-// Example All in one place folder structure
+import path from "path";
 import express from "express";
-import { router as routesRabbits } from "./rabbits/routes/rabbits.routes";
+import rabbitsController from "./rabbits/controllers/rabbits.controller";
 
 const app = express();
 const port = 3333;
 
-app.use(express.json());
-app.use("/rabbits", routesRabbits);
+// Ejs config
+app.set("view engine", "ejs");
+app.engine("ejs", require("ejs").__express);
+app.set("views", path.join(__dirname, "./rabbits/views"));
+
+app.use("/rabbits", rabbitsController);
 
 app.listen(port, () =>
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`)
